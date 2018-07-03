@@ -28,6 +28,13 @@ public class Product {
     @JsonSerialize(using = PriceSerializer.class)
     private final BigDecimal price;
 
+    /**
+     *
+     *
+     * @param id
+     * @param name
+     * @param price
+     */
     public Product(String id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;

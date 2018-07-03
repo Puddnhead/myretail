@@ -22,14 +22,38 @@ import static com.mongodb.client.model.Filters.eq;
 @Component
 public class PriceRepositoryImpl implements PriceRepository {
 
+    /**
+     * Client that provides connection to the mongo db
+     */
     private MongoClient mongoClient;
 
+    /**
+     * Mongo Database name
+     */
     @Value("${mongo.db}")
     private String dbName;
 
+    /**
+     * Mongo Collection name
+     */
     @Value("${mongo.collection}")
     private String collectionName;
 
+    /**
+     * Property name for the price field in mongo
+     */
+    static final String PRICE_PROPERTY = "price";
+
+    /**
+     * Property name for the product id field in mongo
+     */
+    static final String PRODUCT_ID_PROPERTY = "product_id";
+
+    /**
+     * Single-arg constructor for Spring
+     *
+     * @param mongoClient injected mongo client
+     */
     public PriceRepositoryImpl(@NonNull MongoClient mongoClient) {
         this.mongoClient = mongoClient;
     }
@@ -40,10 +64,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
         MongoDatabase db = mongoClient.getDatabase(dbName);
         MongoCollection<Document> collection = db.getCollection(collectionName);
-        MongoCursor<Document> documents = collection.find(eq("productId", productId)).limit(1).iterator();
+        MongoCursor<Document> documents = collection.find(eq(PRODUCT_ID_PROPERTY, productId)).iterator();
 
         if (documents.hasNext()) {
-            price = new BigDecimal(documents.next().getDouble("price"));
+            price = new BigDecimal(documents.next().getDouble(PRICE_PROPERTY));
         }
 
         return price;
