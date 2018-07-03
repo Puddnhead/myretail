@@ -1,4 +1,4 @@
-package com.wilklow.data.api;
+package com.myretail.data.api;
 
 import java.math.BigDecimal;
 

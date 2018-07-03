@@ -1,10 +1,10 @@
-package com.wilklow.data.impl;
+package com.myretail.data.impl;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.wilklow.data.api.PriceRepository;
+import com.myretail.data.api.PriceRepository;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import static com.mongodb.client.model.Filters.eq;
 
 /**
- * Implementation class for {@link com.wilklow.data.api.PriceRepository}
+ * Implementation class for {@link com.myretail.data.api.PriceRepository}
  *
  * Created by MVW on 7/3/2018.
  */

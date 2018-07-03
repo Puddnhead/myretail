@@ -1,4 +1,4 @@
-package com.wilklow.data;
+package com.myretail.data;
 
 import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;

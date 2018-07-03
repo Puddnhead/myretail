@@ -1,4 +1,4 @@
-package com.wilklow.domain;
+package com.myretail.domain;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

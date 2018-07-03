@@ -1,6 +1,6 @@
-package com.wilklow.service.client;
+package com.myretail.service.client;
 
-import com.wilklow.domain.Product;
+import com.myretail.domain.Product;
 
 /**
  * Service for CRUD operations on products

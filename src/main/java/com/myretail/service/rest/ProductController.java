@@ -1,7 +1,7 @@
-package com.wilklow.service.rest;
+package com.myretail.service.rest;
 
-import com.wilklow.domain.Product;
-import com.wilklow.service.client.ProductService;
+import com.myretail.domain.Product;
+import com.myretail.service.client.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PathVariable;
