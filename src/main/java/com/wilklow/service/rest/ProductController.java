@@ -2,14 +2,12 @@ package com.wilklow.service.rest;
 
 import com.wilklow.domain.Product;
 import com.wilklow.service.client.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.math.BigDecimal;
 
 /**
  * Rest layer for {@link ProductService}
@@ -20,9 +18,11 @@ import java.math.BigDecimal;
 @RequestMapping("/product")
 public class ProductController implements ProductService {
 
-    @Autowired
-    @Qualifier("productServiceImpl")
     private ProductService productService;
+
+    public ProductController(@Qualifier("productServiceImpl") @NonNull ProductService productService) {
+        this.productService = productService;
+    }
 
     /**
      * Fetch a product by id

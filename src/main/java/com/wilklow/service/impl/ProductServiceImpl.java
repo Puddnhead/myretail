@@ -6,6 +6,7 @@ import com.wilklow.service.client.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     private PriceRepository priceRepository;
 
-    public ProductServiceImpl(PriceRepository priceRepository) {
+    public ProductServiceImpl(@NonNull PriceRepository priceRepository) {
         this.priceRepository = priceRepository;
     }
 

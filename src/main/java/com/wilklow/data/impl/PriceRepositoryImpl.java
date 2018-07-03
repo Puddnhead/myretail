@@ -7,6 +7,7 @@ import com.mongodb.client.MongoDatabase;
 import com.wilklow.data.api.PriceRepository;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -29,7 +30,7 @@ public class PriceRepositoryImpl implements PriceRepository {
     @Value("${mongo.collection}")
     private String collectionName;
 
-    public PriceRepositoryImpl(MongoClient mongoClient) {
+    public PriceRepositoryImpl(@NonNull MongoClient mongoClient) {
         this.mongoClient = mongoClient;
     }
 
