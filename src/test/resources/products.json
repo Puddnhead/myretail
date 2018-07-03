@@ -1,0 +1,10 @@
+{"_id":{"$oid":"5b3b0c2b2773cf68be3c07dc"},"productId":"10000000","price":9.9999999999e+08}
+{"_id":{"$oid":"5b3b0ea95913dbdd99c55976"},"productId":"10000001","price":350000.0}
+{"_id":{"$oid":"5b3b0ecb5913dbdd99c55977"},"productId":"10000002","price":4e+09}
+{"_id":{"$oid":"5b3b0efa5913dbdd99c55978"},"productId":"10000003","price":89765.33}
+{"_id":{"$oid":"5b3b0f125913dbdd99c55979"},"productId":"10000004","price":0.03}
+{"_id":{"$oid":"5b3b0f43c8c15f07e859508d"},"productId":"10000005","price":80000.0}
+{"_id":{"$oid":"5b3b1028afbe801b5d47ee47"},"productId":"10000006","price":2.3e+06}
+{"_id":{"$oid":"5b3b104cafbe801b5d47ee48"},"productId":"10000007","price":1e+10}
+{"_id":{"$oid":"5b3b1073afbe801b5d47ee49"},"productId":"10000008","price":8e+08}
+{"_id":{"$oid":"5b3b1090afbe801b5d47ee4a"},"productId":"10000009","price":2000.0}
