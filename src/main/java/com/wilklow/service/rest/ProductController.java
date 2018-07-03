@@ -1,7 +1,6 @@
 package com.wilklow.service.rest;
 
 import com.wilklow.domain.Product;
-import com.wilklow.exceptions.ProductNotFoundException;
 import com.wilklow.service.client.ProductService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class ProductController implements ProductService {
      *
      * @param id product id
      * @return a product for the given id
-     * @throws com.wilklow.exceptions.ProductNotFoundException
      */
     @RequestMapping("/{id}")
     public @ResponseBody Product getProduct(@PathVariable String id) {
