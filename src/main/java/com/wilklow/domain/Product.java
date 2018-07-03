@@ -25,15 +25,6 @@ public class Product {
      */
     private final BigDecimal price;
 
-    /**
-     * No-arg constructor required by Jackson
-     */
-    private Product() {
-        this.id = null;
-        this.name = null;
-        this.price = null;
-    }
-
     public Product(String id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;
