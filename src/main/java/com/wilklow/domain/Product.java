@@ -1,5 +1,7 @@
 package com.wilklow.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -23,6 +25,7 @@ public class Product {
     /**
      * Product price
      */
+    @JsonSerialize(using = PriceSerializer.class)
     private final BigDecimal price;
 
     public Product(String id, String name, BigDecimal price) {

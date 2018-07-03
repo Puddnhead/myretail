@@ -12,8 +12,8 @@ public interface ProductService {
     /**
      * Fetch a product with a given id
      *
-     * @param id product id
+     * @param productId product id
      * @return product with the given id or null
      */
-    Product getProduct(String id);
+    Product getProduct(String productId);
 }
