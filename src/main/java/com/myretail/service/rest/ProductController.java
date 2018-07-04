@@ -4,10 +4,9 @@ import com.myretail.domain.Product;
 import com.myretail.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 /**
  * Rest layer for {@link ProductService}
@@ -31,5 +30,11 @@ public class ProductController implements ProductService {
     @Override
     public @ResponseBody Product getProduct(@PathVariable String productId) {
         return productService.getProduct(productId);
+    }
+
+    @RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
+    @Override
+    public @ResponseBody Product updatePrice(@RequestBody Product product) {
+        return productService.updatePrice(product);
     }
 }

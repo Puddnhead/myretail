@@ -1,12 +1,16 @@
 package com.myretail.service.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myretail.data.api.PriceRepository;
+import com.myretail.domain.Product;
 import com.myretail.service.api.ProductNameService;
+import com.myretail.util.Outcome;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,6 +20,7 @@ import java.math.RoundingMode;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +45,8 @@ public class ProductControllerTest {
     @Autowired
     private ProductNameService productNameService;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     private static final String PRODUCT_ID = "abc";
     private static final String PRODUCT_NAME = "Building Made out of Napkins";
     private static final BigDecimal PRICE = new BigDecimal(99.99).setScale(2, RoundingMode.HALF_UP);
@@ -50,9 +57,9 @@ public class ProductControllerTest {
         when(productNameService.getProductName(PRODUCT_ID)).thenReturn(PRODUCT_NAME);
 
         this.mockMvc.perform(get("/product/" + PRODUCT_ID)).andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.productId").value(PRODUCT_ID))
                 .andExpect(jsonPath("$.name").value(PRODUCT_NAME))
                 .andExpect(jsonPath("$.price").value(PRICE));
-
     }
 
     @Test
@@ -70,4 +77,32 @@ public class ProductControllerTest {
         this.mockMvc.perform(get("/product/" + PRODUCT_ID)).andDo(print()).andExpect(status().isNotFound());
     }
 
+    @Test
+    public void testUpdatePrice() throws Exception {
+        when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.SUCCESS);
+
+        Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
+        String productJson = objectMapper.writeValueAsString(product);
+
+        this.mockMvc.perform(put("/product/" + PRODUCT_ID)
+                .content(productJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.productId").value(PRODUCT_ID))
+                .andExpect(jsonPath("$.name").value(PRODUCT_NAME))
+                .andExpect(jsonPath("$.price").value(PRICE));
+    }
+
+    @Test
+    public void testUpdatePriceNoMatchingProductThrows400() throws Exception {
+        when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.FAILURE);
+
+        Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
+        String productJson = objectMapper.writeValueAsString(product);
+
+        this.mockMvc.perform(put("/product/" + PRODUCT_ID)
+                .content(productJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
 }

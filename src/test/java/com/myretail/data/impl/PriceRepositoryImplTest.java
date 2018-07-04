@@ -5,6 +5,8 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
+import com.myretail.util.Outcome;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.junit.Before;
@@ -52,9 +54,13 @@ public class PriceRepositoryImplTest {
     @Mock
     private Document document;
 
+    @Mock
+    private UpdateResult updateResult;
+
     private static final String DB_NAME = "db";
     private static final String COLLECTION_NAME = "collection";
     private static final String PRODUCT_ID = "123";
+    private static final BigDecimal PRICE = new BigDecimal(1000);
 
     @Before
     public void setup() {
@@ -65,6 +71,8 @@ public class PriceRepositoryImplTest {
         when(mockDatabase.getCollection(anyString())).thenReturn(mockCollection);
         when(mockCollection.find(any(Bson.class))).thenReturn(mockFindIterable);
         when(mockFindIterable.iterator()).thenReturn(mockCursor);
+
+        when(mockCollection.updateOne(any(Bson.class), any(Bson.class))).thenReturn(updateResult);
     }
 
     @Test
@@ -83,5 +91,19 @@ public class PriceRepositoryImplTest {
 
         BigDecimal price = priceRepository.getProductPrice(PRODUCT_ID);
         assertThat(price, is(nullValue()));
+    }
+
+    @Test
+    public void testUpdatePrice() {
+        when(updateResult.getMatchedCount()).thenReturn(1L);
+        Outcome outcome = priceRepository.updatePrice(PRODUCT_ID, PRICE);
+        assertThat(outcome, is(Outcome.SUCCESS));
+    }
+
+    @Test
+    public void testUpdatePriceNoMatchingProduct() {
+        when(updateResult.getMatchedCount()).thenReturn(0L);
+        Outcome outcome = priceRepository.updatePrice(PRODUCT_ID, PRICE);
+        assertThat(outcome, is(Outcome.FAILURE));
     }
 }

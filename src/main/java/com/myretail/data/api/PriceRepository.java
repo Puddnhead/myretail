@@ -1,5 +1,7 @@
 package com.myretail.data.api;
 
+import com.myretail.util.Outcome;
+
 import java.math.BigDecimal;
 
 /**
@@ -16,4 +18,13 @@ public interface PriceRepository {
      * @return a price or null if the price cannot be found
      */
     BigDecimal getProductPrice(String productId);
+
+    /**
+     * Update the price of a product
+     *
+     * @param productId product id
+     * @param price price
+     * @return SUCCESS if the update succeeded else FAILURE
+     */
+    Outcome updatePrice(String productId, BigDecimal price);
 }
