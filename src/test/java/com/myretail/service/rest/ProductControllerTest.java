@@ -56,7 +56,7 @@ public class ProductControllerTest {
         when(priceRepository.getProductPrice(PRODUCT_ID)).thenReturn(PRICE);
         when(productNameService.getProductName(PRODUCT_ID)).thenReturn(PRODUCT_NAME);
 
-        this.mockMvc.perform(get("/product/" + PRODUCT_ID)).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/products/" + PRODUCT_ID)).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.productId").value(PRODUCT_ID))
                 .andExpect(jsonPath("$.name").value(PRODUCT_NAME))
                 .andExpect(jsonPath("$.price").value(PRICE));
@@ -66,7 +66,7 @@ public class ProductControllerTest {
     public void testGetProductNoPriceInformationReturns404() throws Exception {
         when(priceRepository.getProductPrice(PRODUCT_ID)).thenReturn(null);
 
-        this.mockMvc.perform(get("/product/" + PRODUCT_ID)).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(get("/products/" + PRODUCT_ID)).andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ProductControllerTest {
         when(priceRepository.getProductPrice(PRODUCT_ID)).thenReturn(PRICE);
         when(productNameService.getProductName(PRODUCT_ID)).thenReturn(null);
 
-        this.mockMvc.perform(get("/product/" + PRODUCT_ID)).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(get("/products/" + PRODUCT_ID)).andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class ProductControllerTest {
         Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
         String productJson = objectMapper.writeValueAsString(product);
 
-        this.mockMvc.perform(put("/product/" + PRODUCT_ID)
+        this.mockMvc.perform(put("/products/" + PRODUCT_ID)
                 .content(productJson)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isOk())
@@ -100,7 +100,7 @@ public class ProductControllerTest {
         Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
         String productJson = objectMapper.writeValueAsString(product);
 
-        this.mockMvc.perform(put("/product/" + PRODUCT_ID)
+        this.mockMvc.perform(put("/products/" + PRODUCT_ID)
                 .content(productJson)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isBadRequest());

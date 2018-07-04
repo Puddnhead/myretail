@@ -6,15 +6,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 /**
  * Rest layer for {@link ProductService}
  *
  * Created by MVW on 7/2/2018.
  */
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController implements ProductService {
 
     private ProductService productService;
