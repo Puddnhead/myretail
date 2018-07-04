@@ -6,6 +6,8 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
 import com.myretail.data.api.PriceRepository;
+import com.myretail.domain.Currency;
+import com.myretail.domain.Price;
 import com.myretail.util.Outcome;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +47,8 @@ public class PriceRepositoryImpl implements PriceRepository {
      * Property name for the price field in mongo
      */
     static final String PRICE_PROPERTY = "price";
+    static final String VALUE_PROPERTY = "value";
+    static final String CURRENCY_PROPERTY = "currency";
 
     /**
      * Property name for the product id field in mongo
@@ -59,27 +63,31 @@ public class PriceRepositoryImpl implements PriceRepository {
      * @see com.myretail.data.api.PriceRepository#getProductPrice(String)
      */
     @Override
-    public BigDecimal getProductPrice(String productId) {
-        BigDecimal price = null;
+    public Price getProductPrice(String productId) {
+        Price price = null;
 
         MongoCollection<Document> collection = getCollection();
         MongoCursor<Document> documents = collection.find(eq(PRODUCT_ID_PROPERTY, productId)).iterator();
 
         if (documents.hasNext()) {
-            price = new BigDecimal(documents.next().getDouble(PRICE_PROPERTY));
+            Document priceDoc = documents.next().get(PRICE_PROPERTY, Document.class);
+            price = new Price(new BigDecimal(priceDoc.getDouble(VALUE_PROPERTY)),
+                    Currency.valueOf(priceDoc.getString(CURRENCY_PROPERTY)));
         }
 
         return price;
     }
 
     /**
-     * @see com.myretail.data.api.PriceRepository#updatePrice(String, BigDecimal)
+     * @see com.myretail.data.api.PriceRepository#updatePrice(String, Price)
      */
     @Override
-    public Outcome updatePrice(String productId, BigDecimal price) {
+    public Outcome updatePrice(String productId, Price price) {
         MongoCollection<Document> collection = getCollection();
+        Document priceDoc = new Document(VALUE_PROPERTY, price.getValue().doubleValue())
+                .append(CURRENCY_PROPERTY, price.getCurrency().name());
         UpdateResult result = collection.updateOne(eq(PRODUCT_ID_PROPERTY, productId),
-                new Document("$set", new Document(PRICE_PROPERTY, price.doubleValue())));
+                new Document("$set", new Document(PRICE_PROPERTY, priceDoc)));
 
         if (result.getMatchedCount() > 0) {
             return Outcome.SUCCESS;

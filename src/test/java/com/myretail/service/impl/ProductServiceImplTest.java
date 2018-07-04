@@ -1,6 +1,8 @@
 package com.myretail.service.impl;
 
 import com.myretail.data.api.PriceRepository;
+import com.myretail.domain.Currency;
+import com.myretail.domain.Price;
 import com.myretail.domain.Product;
 import com.myretail.service.api.ProductNameService;
 import com.myretail.service.exception.InvalidUpdateException;
@@ -37,7 +39,7 @@ public class ProductServiceImplTest {
 
     private static final String PRODUCT_ID = "10000000";
     private static final String PRODUCT_NAME = "Really Big Jigsaw Puzzle";
-    private static final BigDecimal PRICE = new BigDecimal("10000000");
+    private static final Price PRICE = new Price(new BigDecimal("10000000"), Currency.MXN);
 
     @Test
     public void testGetProduct() {

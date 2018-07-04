@@ -2,6 +2,8 @@ package com.myretail.service.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myretail.data.api.PriceRepository;
+import com.myretail.domain.Currency;
+import com.myretail.domain.Price;
 import com.myretail.domain.Product;
 import com.myretail.service.api.ProductNameService;
 import com.myretail.util.Outcome;
@@ -49,7 +51,9 @@ public class ProductControllerTest {
 
     private static final String PRODUCT_ID = "abc";
     private static final String PRODUCT_NAME = "Building Made out of Napkins";
-    private static final BigDecimal PRICE = new BigDecimal(99.99).setScale(2, RoundingMode.HALF_UP);
+    private static final BigDecimal PRICE_VALUE = new BigDecimal(99.99).setScale(2, RoundingMode.HALF_UP);
+    private static final Currency CURRENCY = Currency.USD;
+    private static final Price PRICE = new Price(PRICE_VALUE, CURRENCY);
 
     @Test
     public void testGetProduct() throws Exception {
@@ -59,7 +63,8 @@ public class ProductControllerTest {
         this.mockMvc.perform(get("/products/" + PRODUCT_ID)).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.productId").value(PRODUCT_ID))
                 .andExpect(jsonPath("$.name").value(PRODUCT_NAME))
-                .andExpect(jsonPath("$.price").value(PRICE));
+                .andExpect(jsonPath("$.price.currency").value(CURRENCY.name()))
+                .andExpect(jsonPath("$.price.value").value(PRICE_VALUE));
     }
 
     @Test
@@ -90,7 +95,8 @@ public class ProductControllerTest {
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.productId").value(PRODUCT_ID))
                 .andExpect(jsonPath("$.name").value(PRODUCT_NAME))
-                .andExpect(jsonPath("$.price").value(PRICE));
+                .andExpect(jsonPath("$.price.value").value(PRICE_VALUE))
+                .andExpect(jsonPath("$.price.currency").value(CURRENCY.name()));
     }
 
     @Test

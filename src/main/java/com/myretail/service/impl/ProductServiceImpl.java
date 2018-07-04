@@ -1,6 +1,7 @@
 package com.myretail.service.impl;
 
 import com.myretail.data.api.PriceRepository;
+import com.myretail.domain.Price;
 import com.myretail.domain.Product;
 import com.myretail.service.api.ProductNameService;
 import com.myretail.service.api.ProductService;
@@ -11,8 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import java.math.BigDecimal;
 
 /**
  * Service implementation for {@link com.myretail.service.api.ProductService}
@@ -37,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product getProduct(String productId) {
-        BigDecimal price = priceRepository.getProductPrice(productId);
+        Price price = priceRepository.getProductPrice(productId);
         if (price == null) {
             throw new ProductNotFoundException("Error fetching product price information");
         }

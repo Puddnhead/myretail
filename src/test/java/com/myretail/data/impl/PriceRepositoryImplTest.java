@@ -6,6 +6,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
+import com.myretail.domain.Currency;
+import com.myretail.domain.Price;
 import com.myretail.util.Outcome;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -52,7 +54,7 @@ public class PriceRepositoryImplTest {
     private MongoCursor<Document> mockCursor;
 
     @Mock
-    private Document document;
+    private Document productDocument;
 
     @Mock
     private UpdateResult updateResult;
@@ -60,7 +62,10 @@ public class PriceRepositoryImplTest {
     private static final String DB_NAME = "db";
     private static final String COLLECTION_NAME = "collection";
     private static final String PRODUCT_ID = "123";
-    private static final BigDecimal PRICE = new BigDecimal(1000);
+    private static final Price PRICE = new Price(new BigDecimal(1000), Currency.USD);
+    private static final Document PRICE_DOCUMENT =
+            new Document(PriceRepositoryImpl.VALUE_PROPERTY, PRICE.getValue().doubleValue())
+                    .append(PriceRepositoryImpl.CURRENCY_PROPERTY, PRICE.getCurrency().name());
 
     @Before
     public void setup() {
@@ -78,18 +83,18 @@ public class PriceRepositoryImplTest {
     @Test
     public void testGetExistingPrice() {
         when(mockCursor.hasNext()).thenReturn(true);
-        when(mockCursor.next()).thenReturn(document);
-        when(document.getDouble(PriceRepositoryImpl.PRICE_PROPERTY)).thenReturn(9.99);
+        when(mockCursor.next()).thenReturn(productDocument);
+        when(productDocument.get(PriceRepositoryImpl.PRICE_PROPERTY, Document.class)).thenReturn(PRICE_DOCUMENT);
 
-        BigDecimal price = priceRepository.getProductPrice(PRODUCT_ID);
-        assertThat(price, is(new BigDecimal(9.99)));
+        Price price = priceRepository.getProductPrice(PRODUCT_ID);
+        assertThat(price, is(PRICE));
     }
 
     @Test
     public void testGetPriceForMissingProductReturnsNull() {
         when(mockCursor.hasNext()).thenReturn(false);
 
-        BigDecimal price = priceRepository.getProductPrice(PRODUCT_ID);
+        Price price = priceRepository.getProductPrice(PRODUCT_ID);
         assertThat(price, is(nullValue()));
     }
 

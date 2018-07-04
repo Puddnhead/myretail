@@ -2,9 +2,7 @@ package com.myretail.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -27,12 +25,11 @@ public class Product {
     /**
      * Product price
      */
-    @JsonSerialize(using = PriceSerializer.class)
-    private BigDecimal price;
+    private Price price;
 
     @JsonCreator
     public Product(@JsonProperty("productId") String productId, @JsonProperty("name") String name,
-                   @JsonProperty("price") BigDecimal price) {
+                   @JsonProperty("price") Price price) {
         this.productId = productId;
         this.name = name;
         this.price = price;
@@ -46,7 +43,7 @@ public class Product {
         return name;
     }
 
-    public BigDecimal getPrice() {
+    public Price getPrice() {
         return price;
     }
 
