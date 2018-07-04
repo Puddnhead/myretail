@@ -49,15 +49,13 @@ public class PriceRepositoryImpl implements PriceRepository {
      */
     static final String PRODUCT_ID_PROPERTY = "product_id";
 
-    /**
-     * Single-arg constructor for Spring
-     *
-     * @param mongoClient injected mongo client
-     */
     public PriceRepositoryImpl(@NonNull MongoClient mongoClient) {
         this.mongoClient = mongoClient;
     }
 
+    /**
+     * @see com.myretail.data.api.PriceRepository#getProductPrice(String)
+     */
     @Override
     public BigDecimal getProductPrice(String productId) {
         BigDecimal price = null;

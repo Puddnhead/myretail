@@ -1,6 +1,6 @@
 package com.myretail.service.impl;
 
-import com.myretail.service.client.ProductNameService;
+import com.myretail.service.api.ProductNameService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;

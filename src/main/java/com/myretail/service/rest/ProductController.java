@@ -1,7 +1,7 @@
 package com.myretail.service.rest;
 
 import com.myretail.domain.Product;
-import com.myretail.service.client.ProductService;
+import com.myretail.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +25,10 @@ public class ProductController implements ProductService {
     }
 
     /**
-     * Fetch a product by id
-     *
-     * @param productId product id
-     * @return a product for the given id
+     * @see com.myretail.service.api.ProductService#getProduct(String)
      */
     @RequestMapping("/{productId}")
+    @Override
     public @ResponseBody Product getProduct(@PathVariable String productId) {
         return productService.getProduct(productId);
     }

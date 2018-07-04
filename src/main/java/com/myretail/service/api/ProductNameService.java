@@ -1,4 +1,4 @@
-package com.myretail.service.client;
+package com.myretail.service.api;
 
 /**
  * Service for fetching product names

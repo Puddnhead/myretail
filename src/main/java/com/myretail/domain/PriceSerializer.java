@@ -9,6 +9,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
+ * Serializes BigDecimal objects to a price format with 2 decimals rounded half up
+ *
+ * Ex:  33.33333 = 33.33
+ *      33.555 = 33.56
  * Created by MVW on 7/3/2018.
  */
 public class PriceSerializer extends JsonSerializer<BigDecimal> {

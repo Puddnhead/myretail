@@ -1,4 +1,4 @@
-package com.myretail.service.client;
+package com.myretail.service.api;
 
 import com.myretail.domain.Product;
 
@@ -13,7 +13,8 @@ public interface ProductService {
      * Fetch a product with a given id
      *
      * @param productId product id
-     * @return product with the given id or null
+     * @return product with the given id
+     * @throws com.myretail.service.exception.ProductNotFoundException if a valid product cannot be found
      */
     Product getProduct(String productId);
 }
