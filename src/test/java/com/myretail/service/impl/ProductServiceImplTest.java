@@ -40,6 +40,11 @@ public class ProductServiceImplTest {
     private static final String PRODUCT_ID = "10000000";
     private static final String PRODUCT_NAME = "Really Big Jigsaw Puzzle";
     private static final Price PRICE = new Price(new BigDecimal("10000000"), Currency.MXN);
+    private static final Product TEST_PRODUCT = new Product.Builder()
+            .productId(PRODUCT_ID)
+            .name(PRODUCT_NAME)
+            .price(PRICE)
+            .build();
 
     @Test
     public void testGetProduct() {
@@ -47,7 +52,7 @@ public class ProductServiceImplTest {
         when(productNameService.getProductName(PRODUCT_ID)).thenReturn(PRODUCT_NAME);
 
         Product product = productService.getProduct(PRODUCT_ID);
-        assertThat(product, is(new Product(PRODUCT_ID, PRODUCT_NAME, PRICE)));
+        assertThat(product, is(TEST_PRODUCT));
     }
 
     @Test(expected = ProductNotFoundException.class)
@@ -66,15 +71,13 @@ public class ProductServiceImplTest {
     @Test
     public void testUpdatePrice() {
         when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.SUCCESS);
-        Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
-        Product updatedProduct = productService.updatePrice(product);
-        assertThat(updatedProduct, is(product));
+        Product updatedProduct = productService.updatePrice(TEST_PRODUCT);
+        assertThat(updatedProduct, is(TEST_PRODUCT));
     }
 
     @Test(expected = InvalidUpdateException.class)
     public void testUpdatePriceNoMatchingProduct() {
         when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.FAILURE);
-        Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
-        productService.updatePrice(product);
+        productService.updatePrice(TEST_PRODUCT);
     }
 }

@@ -86,7 +86,11 @@ public class ProductControllerTest {
     public void testUpdatePrice() throws Exception {
         when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.SUCCESS);
 
-        Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
+        Product product = new Product.Builder()
+                .productId(PRODUCT_ID)
+                .name(PRODUCT_NAME)
+                .price(PRICE)
+                .build();
         String productJson = objectMapper.writeValueAsString(product);
 
         this.mockMvc.perform(put("/products/" + PRODUCT_ID)
@@ -103,7 +107,11 @@ public class ProductControllerTest {
     public void testUpdatePriceNoMatchingProductThrows400() throws Exception {
         when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.FAILURE);
 
-        Product product = new Product(PRODUCT_ID, PRODUCT_NAME, PRICE);
+        Product product = new Product.Builder()
+                .productId(PRODUCT_ID)
+                .name(PRODUCT_NAME)
+                .price(PRICE)
+                .build();
         String productJson = objectMapper.writeValueAsString(product);
 
         this.mockMvc.perform(put("/products/" + PRODUCT_ID)

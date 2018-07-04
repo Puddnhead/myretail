@@ -1,4 +1,4 @@
-package com.myretail.domain;
+package com.myretail.domain.serialization;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonDeserializer;

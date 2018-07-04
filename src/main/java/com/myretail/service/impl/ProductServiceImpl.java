@@ -46,7 +46,11 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFoundException("Error fetching product name information");
         }
 
-        return new Product(productId, productName, price);
+        return new Product.Builder()
+            .productId(productId)
+            .name(productName)
+            .price(price)
+            .build();
     }
 
     @Override

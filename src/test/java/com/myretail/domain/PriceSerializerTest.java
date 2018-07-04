@@ -1,6 +1,7 @@
 package com.myretail.domain;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.myretail.domain.serialization.PriceSerializer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

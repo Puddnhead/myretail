@@ -3,6 +3,7 @@ package com.myretail.domain;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.myretail.domain.serialization.PriceSerializer;
 
 import java.math.BigDecimal;
 import java.util.Objects;
