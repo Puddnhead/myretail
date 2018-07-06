@@ -7,7 +7,7 @@ import com.myretail.domain.Product;
 import com.myretail.service.api.ProductNameService;
 import com.myretail.service.exception.InvalidUpdateException;
 import com.myretail.service.exception.ProductNotFoundException;
-import com.myretail.util.Outcome;
+import com.myretail.domain.Outcome;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

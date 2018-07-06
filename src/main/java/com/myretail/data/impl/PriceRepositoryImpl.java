@@ -8,7 +8,7 @@ import com.mongodb.client.result.UpdateResult;
 import com.myretail.data.api.PriceRepository;
 import com.myretail.domain.Currency;
 import com.myretail.domain.Price;
-import com.myretail.util.Outcome;
+import com.myretail.domain.Outcome;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
@@ -53,7 +53,7 @@ public class PriceRepositoryImpl implements PriceRepository {
     /**
      * Property name for the product id field in mongo
      */
-    static final String PRODUCT_ID_PROPERTY = "product_id";
+    private static final String PRODUCT_ID_PROPERTY = "product_id";
 
     public PriceRepositoryImpl(@NonNull MongoClient mongoClient) {
         this.mongoClient = mongoClient;

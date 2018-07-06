@@ -8,7 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
 import com.myretail.domain.Currency;
 import com.myretail.domain.Price;
-import com.myretail.util.Outcome;
+import com.myretail.domain.Outcome;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.junit.Before;

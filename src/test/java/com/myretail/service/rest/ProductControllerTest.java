@@ -5,8 +5,9 @@ import com.myretail.data.api.PriceRepository;
 import com.myretail.domain.Currency;
 import com.myretail.domain.Price;
 import com.myretail.domain.Product;
+import com.myretail.server.MasterOfTheUniverseFilter;
 import com.myretail.service.api.ProductNameService;
-import com.myretail.util.Outcome;
+import com.myretail.domain.Outcome;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,16 +86,11 @@ public class ProductControllerTest {
     @Test
     public void testUpdatePrice() throws Exception {
         when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.SUCCESS);
-
-        Product product = new Product.Builder()
-                .productId(PRODUCT_ID)
-                .name(PRODUCT_NAME)
-                .price(PRICE)
-                .build();
-        String productJson = objectMapper.writeValueAsString(product);
+        String productJson = getProductJson();
 
         this.mockMvc.perform(put("/products/" + PRODUCT_ID)
                 .content(productJson)
+                .header(MasterOfTheUniverseFilter.HEADER_NAME, MasterOfTheUniverseFilter.HEADER_VALUE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.productId").value(PRODUCT_ID))
@@ -106,17 +102,34 @@ public class ProductControllerTest {
     @Test
     public void testUpdatePriceNoMatchingProductThrows400() throws Exception {
         when(priceRepository.updatePrice(PRODUCT_ID, PRICE)).thenReturn(Outcome.FAILURE);
+        String productJson = getProductJson();
 
+        this.mockMvc.perform(put("/products/" + PRODUCT_ID)
+                .content(productJson)
+                .header(MasterOfTheUniverseFilter.HEADER_NAME, MasterOfTheUniverseFilter.HEADER_VALUE)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testUpdatePriceUnauthorizedRequest() throws Exception {
+        String productJson = getProductJson();
+
+        this.mockMvc.perform(put("/products/" + PRODUCT_ID)
+                .content(productJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isUnauthorized());
+    }
+
+    /**
+     * Utility method to generate product JSON for tests
+     */
+    private String getProductJson() throws Exception{
         Product product = new Product.Builder()
                 .productId(PRODUCT_ID)
                 .name(PRODUCT_NAME)
                 .price(PRICE)
                 .build();
-        String productJson = objectMapper.writeValueAsString(product);
-
-        this.mockMvc.perform(put("/products/" + PRODUCT_ID)
-                .content(productJson)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print()).andExpect(status().isBadRequest());
+        return objectMapper.writeValueAsString(product);
     }
 }

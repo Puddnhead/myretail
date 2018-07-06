@@ -1,13 +1,14 @@
 package com.myretail.service.impl;
 
 import com.myretail.data.api.PriceRepository;
+import com.myretail.domain.Outcome;
 import com.myretail.domain.Price;
 import com.myretail.domain.Product;
+import com.myretail.security.RequiresUniverseMastery;
 import com.myretail.service.api.ProductNameService;
 import com.myretail.service.api.ProductService;
 import com.myretail.service.exception.InvalidUpdateException;
 import com.myretail.service.exception.ProductNotFoundException;
-import com.myretail.util.Outcome;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -53,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
             .build();
     }
 
+    @RequiresUniverseMastery
     @Override
     public Product updatePrice(Product product) {
         Outcome outcome = priceRepository.updatePrice(product.getProductId(), product.getPrice());

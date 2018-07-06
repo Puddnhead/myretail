@@ -1,4 +1,4 @@
-package com.myretail.util;
+package com.myretail.domain;
 
 /**
  * Simple enum for SUCCESS and FAILURE

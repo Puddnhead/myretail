@@ -1,9 +1,7 @@
 package com.myretail.data.api;
 
 import com.myretail.domain.Price;
-import com.myretail.util.Outcome;
-
-import java.math.BigDecimal;
+import com.myretail.domain.Outcome;
 
 /**
  * Repository for fetching product prices
