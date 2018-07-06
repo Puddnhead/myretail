@@ -32,7 +32,12 @@ PUT /products/{productId}
 Updates the price of a product in the DB. This request takes a JSON product object and uses
 the product ID of the object rather than the path parameter. It ignores any changes to the
 product name. The service returns the updated object if successful or a 404 Resource Not Found
-exception if the update fails. Sample JSON:
+response if the update fails. 
+
+The service requires a header `Universes-Mastered: This One` without which it will return a 401
+Unauthorized response.
+
+Sample JSON:
 
 ```$json
 {
