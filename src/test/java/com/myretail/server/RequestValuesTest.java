@@ -15,7 +15,7 @@ public class RequestValuesTest {
     @Test
     public void testRequestValues() throws Exception {
         Thread worker1 = new Thread(() -> {
-            RequestValues.setIsMasterOfTheUniverse(true);
+            RequestValues.setMasterOfTheUniverse(true);
             assertThat(RequestValues.isMasterOfTheUniverse(), is(true));
         });
 

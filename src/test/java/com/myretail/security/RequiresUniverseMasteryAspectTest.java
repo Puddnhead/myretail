@@ -17,14 +17,14 @@ public class RequiresUniverseMasteryAspectTest {
     @Test
     public void testMasterOfTheUniverseDoesNothing() {
         RequestValues requestValues = new RequestValues();
-        ReflectionTestUtils.invokeMethod(requestValues, "setIsMasterOfTheUniverse", true);
+        ReflectionTestUtils.invokeMethod(requestValues, "setMasterOfTheUniverse", true);
         requiresUniverseMasteryAspect.requireUniverseMastery();
     }
 
     @Test(expected = AuthorizationException.class)
     public void testEverybodyElseThrowsAuthorizationException() {
         RequestValues requestValues = new RequestValues();
-        ReflectionTestUtils.invokeMethod(requestValues, "setIsMasterOfTheUniverse", false);
+        ReflectionTestUtils.invokeMethod(requestValues, "setMasterOfTheUniverse", false);
         requiresUniverseMasteryAspect.requireUniverseMastery();
     }
 

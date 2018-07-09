@@ -12,7 +12,7 @@ public class RequestValues {
      */
     private static final ThreadLocal<Boolean> isMasterOfTheUniverseThreadLocal = new ThreadLocal<>();
 
-    static void setIsMasterOfTheUniverse(boolean isMasterOfTheUniverse) {
+    static void setMasterOfTheUniverse(boolean isMasterOfTheUniverse) {
         isMasterOfTheUniverseThreadLocal.set(isMasterOfTheUniverse);
     }
 

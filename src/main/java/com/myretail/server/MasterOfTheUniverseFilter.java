@@ -29,12 +29,12 @@ public class MasterOfTheUniverseFilter implements Filter {
             String header = httpServletRequest.getHeader(HEADER_NAME);
             if (HEADER_VALUE.equals(header)) {
                 // If they say they are then clearly they are
-                RequestValues.setIsMasterOfTheUniverse(true);
+                RequestValues.setMasterOfTheUniverse(true);
             }
             filterChain.doFilter(servletRequest, servletResponse);
         } finally {
             // We need to reset the thread local because this thread may be reused in a later request
-            RequestValues.setIsMasterOfTheUniverse(false);
+            RequestValues.setMasterOfTheUniverse(false);
         }
     }
 

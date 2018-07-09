@@ -2,8 +2,6 @@ package com.myretail.service.api;
 
 import com.myretail.domain.Product;
 
-import java.math.BigDecimal;
-
 /**
  * Service for CRUD operations on products
  *
