@@ -45,7 +45,6 @@ public class Price {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(value, currency);
     }
 }
